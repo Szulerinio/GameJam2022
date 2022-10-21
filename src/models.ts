@@ -3,4 +3,7 @@ export interface KeysPressed {
   s: boolean;
   d: boolean;
   w: boolean;
+
+  q: boolean;
+  e: boolean;
 }
