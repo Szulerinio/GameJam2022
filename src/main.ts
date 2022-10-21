@@ -86,21 +86,19 @@ const player = new Player();
 const gameLoop = (timestamp: number) => {
   const delta = (timestamp - lastTimestamp) / 1000;
   lastTimestamp = timestamp;
-  player.move(delta, keysPressed);
+  player.move(delta, keysPressed, camera.r);
   camera.rotate(delta, keysPressed);
 
   ctx.clearRect(0, 0, gameWindow.width, gameWindow.height);
-  console.log(camera.rotation);
+  console.log(camera.r.val);
 
   ctx.translate(400, 400);
-  ctx.rotate(camera.rotation);
+  ctx.rotate(camera.r.val);
   ctx.translate(-400, -400);
   ctx.drawImage(
     images.chessboard,
-    -player.position.x,
-    -player.position.y,
-    800,
-    800
+    0 - player.position.x,
+    0 - player.position.y
   );
   ctx.setTransform(1, 0, 0, 1, 0, 0);
 
