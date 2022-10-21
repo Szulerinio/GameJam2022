@@ -1,15 +1,22 @@
-import { setupCounter } from './counter';
+import { loadImages } from './loadImages';
+import { Player } from './player';
+import { KeysPressed } from './models';
 
-const canvas = document.querySelector<HTMLDivElement>('#canvas');
-
-const keysPressed = {
+const canvas = document.querySelector<HTMLCanvasElement>('#canvas');
+const ctx = canvas?.getContext('2d')!;
+const keysPressed: KeysPressed = {
   a: true,
   s: true,
   d: true,
   w: true
 };
 
-const onKeyDown = (e: KeyboardEvent) => {
+const gameWindow = {
+  width: 800,
+  height: 800
+};
+
+const onKeyUp = (e: KeyboardEvent) => {
   switch (e.key) {
     case 'a':
     case 'A':
@@ -32,7 +39,7 @@ const onKeyDown = (e: KeyboardEvent) => {
   }
 };
 
-const onKeyUp = (e: KeyboardEvent) => {
+const onKeyDown = (e: KeyboardEvent) => {
   switch (e.key) {
     case 'a':
     case 'A':
@@ -54,12 +61,8 @@ const onKeyUp = (e: KeyboardEvent) => {
       break;
   }
 };
-const onMouseDown = () => {
-  console.log('aaa');
-};
-const onMouseUp = () => {
-  console.log('aaa');
-};
+const onMouseDown = () => {};
+const onMouseUp = () => {};
 
 document.addEventListener('keydown', onKeyDown);
 document.addEventListener('keyup', onKeyUp);
@@ -67,6 +70,19 @@ document.addEventListener('mousedown', onMouseDown);
 document.addEventListener('mouseup', onMouseUp);
 // document.addEventListener('mousemove', ()=>{})
 
-// setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+let lastTimestamp = 0;
+const images = loadImages();
 
-const render = () => {};
+const player = new Player();
+
+const gameLoop = (timestamp: number) => {
+  const delta = (timestamp - lastTimestamp) / 1000;
+  lastTimestamp = timestamp;
+
+  player.move(delta, keysPressed);
+  ctx.clearRect(0, 0, gameWindow.width, gameWindow.height);
+  ctx.drawImage(images.player, player.position.x, player.position.y);
+
+  requestAnimationFrame(gameLoop);
+};
+gameLoop(lastTimestamp);

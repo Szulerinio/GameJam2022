@@ -2,13 +2,13 @@ body {
   background-color: darkgray;
 }
 
-.game-container{
-    display: flex;
-    height: 100vh;
-    width: 100vw;
-    align-items: center;
-    justify-content: center;
+.game-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
 }
-canvas { 
-background-color: white;
+canvas {  
+    background-color: white;
 }
