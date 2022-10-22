@@ -21,6 +21,16 @@ export class Player {
     sin: 0,
     cos: 1
   };
+  /**
+   *    @property {string} x - distance to left and right side of collisionbox from position (usually half width)
+   *    @property {string} y - distance to top of collisionbox from position
+   *    @info bottom is defined by position
+   */
+  public collisionbox = {
+    x: this.size.x / 2,
+    y: 50
+  };
+
   public rotate = (delta: number, keysPressed: KeysPressed) => {
     if (!(keysPressed.q && keysPressed.e)) {
       if (keysPressed.q) {
