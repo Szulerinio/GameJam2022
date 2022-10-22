@@ -15,6 +15,11 @@ const keysPressed: KeysPressed = {
   e: false
 };
 
+const DEBUGTool = {
+  collisionBox: true,
+  sprite: false
+};
+
 const gameWindow = {
   width: 800,
   height: 800
@@ -105,10 +110,17 @@ const gameLoop = (timestamp: number) => {
     0 - player.position.x + player.onScreenPosition.x,
     0 - player.position.y + player.onScreenPosition.y
   );
-  console.log(objectList[0].z, objectList[1].z);
 
   objectList.forEach((obj) => {
-    obj.draw(ctx, player.position, player.onScreenPosition, player.r.val);
+    DEBUGTool.sprite &&
+      obj.draw(ctx, player.position, player.onScreenPosition, player.r.val);
+    DEBUGTool.collisionBox &&
+      obj.DEBUGdraw(
+        ctx,
+        player.position,
+        player.onScreenPosition,
+        player.r.val
+      );
   });
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   requestAnimationFrame(gameLoop);

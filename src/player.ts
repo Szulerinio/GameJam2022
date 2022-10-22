@@ -1,9 +1,15 @@
-import { DrawMethod, KeysPressed, Rotation } from './models';
+import {
+  CollisionBox,
+  DEBUGDrawMethod,
+  DrawMethod,
+  KeysPressed,
+  Rotation
+} from './models';
 import playerImgURL from './images/player.png';
-import { drawPlaced } from './drawPlaced';
+import { DEBUGdrawPlaced, drawPlaced } from './drawPlaced';
 const playerImg = new Image();
 playerImg.src = playerImgURL;
-export class Player implements DrawMethod {
+export class Player implements DrawMethod, CollisionBox, DEBUGDrawMethod {
   public position = {
     x: 0,
     y: 0
@@ -25,14 +31,11 @@ export class Player implements DrawMethod {
     sin: 0,
     cos: 1
   };
-  /**
-   *    @property {string} x - distance to left and right side of collisionbox from position (usually half width)
-   *    @property {string} y - distance to top of collisionbox from position
-   *    @info bottom is defined by position
-   */
-  public collisionbox = {
+
+  public collisionBox = {
     x: this.size.x / 2,
-    y: 50
+    y: 70,
+    r: 25
   };
 
   public recalcZ = () => {};
@@ -49,6 +52,25 @@ export class Player implements DrawMethod {
       this.position.y,
       this.size.x / 2,
       this.size.y,
+      playerPosition,
+      playerOnScreenPosition,
+      playerRotationAngle
+    );
+  };
+
+  public DEBUGdraw = (
+    ctx: CanvasRenderingContext2D,
+    playerPosition: { x: number; y: number },
+    playerOnScreenPosition: { x: number; y: number },
+    playerRotationAngle: number
+  ) => {
+    DEBUGdrawPlaced(
+      ctx,
+      this.position.x,
+      this.position.y,
+      this.size.x / 2,
+      this.size.y,
+      this.collisionBox,
       playerPosition,
       playerOnScreenPosition,
       playerRotationAngle
