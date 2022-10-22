@@ -1,7 +1,6 @@
 import { loadImages } from './loadImages';
 import { Player } from './player';
 import { KeysPressed } from './models';
-import { Camera } from './camera';
 import { Enemy } from './enemy';
 
 const canvas = document.querySelector<HTMLCanvasElement>('#canvas');
@@ -20,7 +19,6 @@ const gameWindow = {
   height: 800
 };
 
-const camera = new Camera();
 const onKeyDown = (e: KeyboardEvent) => {
   switch (e.key.toLowerCase()) {
     case 'a':
@@ -88,14 +86,14 @@ const enemy = new Enemy();
 const gameLoop = (timestamp: number) => {
   const delta = (timestamp - lastTimestamp) / 1000;
   lastTimestamp = timestamp;
-  player.move(delta, keysPressed, camera.r);
-  camera.rotate(delta, keysPressed);
+  player.move(delta, keysPressed);
+  player.rotate(delta, keysPressed);
 
   ctx.clearRect(0, 0, gameWindow.width, gameWindow.height);
-  console.log(camera.r.val);
+  console.log(player.r.val);
 
   ctx.translate(400, 400);
-  ctx.rotate(camera.r.val);
+  ctx.rotate(player.r.val);
   ctx.translate(-400, -400);
   ctx.drawImage(
     images.chessboard,
@@ -106,25 +104,15 @@ const gameLoop = (timestamp: number) => {
   ctx.setTransform(1, 0, 0, 1, 0, 0);
 
   ctx.translate(400, 400);
-  ctx.rotate(camera.r.val);
+  ctx.rotate(player.r.val);
   ctx.translate(-400, -400);
   ctx.translate(
     enemy.position.x + player.onScreenPosition.x - player.position.x,
     enemy.position.y + player.onScreenPosition.y - player.position.y
   );
-  ctx.rotate(-camera.r.val);
+
+  ctx.rotate(-player.r.val);
   ctx.drawImage(images.enemy, -enemy.size.x / 2, -enemy.size.y);
-  //   ctx.drawImage(
-  //     images.enemy,
-  //     enemy.position.x -
-  //       player.position.x -
-  //       enemy.size.x / 2 +
-  //       player.onScreenPosition.x,
-  //     enemy.position.y -
-  //       player.position.y -
-  //       enemy.size.y +
-  //       player.onScreenPosition.y
-  //   );
 
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.drawImage(
