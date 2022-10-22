@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <canvas id="one"></canvas> <canvas id="two"></canvas>
+    <script>
+      const one = document.getElementById('one').getContext('2d');
+      const two = document.getElementById('two').getContext('2d');
+
+      const offscreen = new OffscreenCanvas(256, 256);
+      const offscreen2 = new OffscreenCanvas(256, 256);
+      const gl = offscreen.getContext('2d');
+      const gl2 = offscreen2.getContext('2d');
+
+      gl.fillRect(20, 20, 20, 20);
+      gl.fillRect(110, 20, 20, 20);
+      const bitmapOne = offscreen.transferToImageBitmap();
+      one.drawImage(bitmapOne, 0, 0);
+      // Perform some drawing for the first canvas using the gl context
+      gl2.fillRect(50, 50, 20, 20);
+      const bitmapOne2 = offscreen2.transferToImageBitmap();
+      one.drawImage(bitmapOne2, 0, 0);
+
+      // Perform some more drawing for the second canvas
+    </script>
+  </body>
+</html>
