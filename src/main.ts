@@ -2,7 +2,6 @@ import { loadImages } from './loadImages';
 import { Player } from './player';
 import { KeysPressed } from './models';
 import { Enemy } from './enemy';
-import { drawPlaced } from './drawPlaced';
 
 const canvas = document.querySelector<HTMLCanvasElement>('#canvas');
 const ctx = canvas?.getContext('2d')!;
