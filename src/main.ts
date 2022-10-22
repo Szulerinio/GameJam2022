@@ -2,6 +2,7 @@ import { loadImages } from './loadImages';
 import { Player } from './player';
 import { KeysPressed } from './models';
 import { Enemy } from './enemy';
+import { drawPlaced } from './drawPlaced';
 
 const canvas = document.querySelector<HTMLCanvasElement>('#canvas');
 const ctx = canvas?.getContext('2d')!;
@@ -90,22 +91,27 @@ const gameLoop = (timestamp: number) => {
   player.rotate(delta, keysPressed);
 
   ctx.clearRect(0, 0, gameWindow.width, gameWindow.height);
-  console.log(player.r.val);
 
-  ctx.translate(400, 400);
+  ctx.translate(player.onScreenPosition.x, player.onScreenPosition.y);
   ctx.rotate(player.r.val);
-  ctx.translate(-400, -400);
+  ctx.translate(-player.onScreenPosition.x, -player.onScreenPosition.y);
+
   ctx.drawImage(
     images.chessboard,
     0 - player.position.x + player.onScreenPosition.x,
     0 - player.position.y + player.onScreenPosition.y
   );
 
-  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  drawPlaced(
+    ctx,
+    images.enemy,
+    enemy.position.x,
+    enemy.position.y,
+    enemy.size.x / 2,
+    enemy.size.y,
+    player
+  );
 
-  ctx.translate(400, 400);
-  ctx.rotate(player.r.val);
-  ctx.translate(-400, -400);
   ctx.translate(
     enemy.position.x + player.onScreenPosition.x - player.position.x,
     enemy.position.y + player.onScreenPosition.y - player.position.y
