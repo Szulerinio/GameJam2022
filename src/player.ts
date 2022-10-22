@@ -1,8 +1,9 @@
-import { KeysPressed, Rotation } from './models';
+import { DrawMethod, KeysPressed, Rotation } from './models';
 import playerImgURL from './images/player.png';
+import { drawPlaced } from './drawPlaced';
 const playerImg = new Image();
 playerImg.src = playerImgURL;
-export class Player {
+export class Player implements DrawMethod {
   public position = {
     x: 0,
     y: 0
@@ -15,7 +16,7 @@ export class Player {
     x: 50,
     y: 100
   };
-  public z = 400;
+  public z = 0;
   public speed = 150;
 
   public rotationSpeed = 1;
@@ -35,6 +36,25 @@ export class Player {
   };
 
   public recalcZ = () => {};
+  public draw = (
+    ctx: CanvasRenderingContext2D,
+    playerPosition: { x: number; y: number },
+    playerOnScreenPosition: { x: number; y: number },
+    playerRotationAngle: number
+  ) => {
+    drawPlaced(
+      ctx,
+      this.image,
+      this.position.x,
+      this.position.y,
+      this.size.x / 2,
+      this.size.y,
+      playerPosition,
+      playerOnScreenPosition,
+      playerRotationAngle
+    );
+  };
+
   public rotate = (delta: number, keysPressed: KeysPressed) => {
     if (!(keysPressed.q && keysPressed.e)) {
       if (keysPressed.q) {

@@ -84,7 +84,6 @@ const images = loadImages();
 const player = new Player();
 const enemy = new Enemy();
 const objectList = [player, enemy];
-// const objectList = [player, enemy].sort();
 
 const gameLoop = (timestamp: number) => {
   const delta = (timestamp - lastTimestamp) / 1000;
@@ -92,7 +91,7 @@ const gameLoop = (timestamp: number) => {
   player.move(delta, keysPressed);
   player.rotate(delta, keysPressed);
 
-  objectList.forEach((obj) => obj.recalcZ(player.r));
+  objectList.forEach((obj) => obj.recalcZ(player.r, player.position));
   objectList.sort((a, b) => {
     return a.z - b.z;
   });
@@ -106,40 +105,12 @@ const gameLoop = (timestamp: number) => {
     0 - player.position.x + player.onScreenPosition.x,
     0 - player.position.y + player.onScreenPosition.y
   );
+  console.log(objectList[0].z, objectList[1].z);
 
   objectList.forEach((obj) => {
-    obj;
+    obj.draw(ctx, player.position, player.onScreenPosition, player.r.val);
   });
-
-  drawPlaced(
-    ctx,
-    enemy.image,
-    enemy.position.x,
-    enemy.position.y,
-    enemy.size.x / 2,
-    enemy.size.y,
-    player.position,
-    player.onScreenPosition,
-    player.r.val
-  );
   ctx.setTransform(1, 0, 0, 1, 0, 0);
-  drawPlaced(
-    ctx,
-    player.image,
-    player.position.x,
-    player.position.y,
-    player.size.x / 2,
-    player.size.y,
-    player.position,
-    player.onScreenPosition,
-    0
-  );
-  ctx.drawImage(
-    player.image,
-    player.onScreenPosition.x - player.size.x / 2,
-    player.onScreenPosition.y - player.size.y
-  );
-
   requestAnimationFrame(gameLoop);
 };
 gameLoop(lastTimestamp);
