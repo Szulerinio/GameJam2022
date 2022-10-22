@@ -103,19 +103,27 @@ const gameLoop = (timestamp: number) => {
     0 - player.position.y + player.onScreenPosition.y
   );
 
-  ctx.drawImage(
-    images.enemy,
-    enemy.position.x -
-      player.position.x -
-      enemy.size.x / 2 +
-      player.onScreenPosition.x,
-    enemy.position.y -
-      player.position.y -
-      enemy.size.y +
-      player.onScreenPosition.y
-  );
   ctx.setTransform(1, 0, 0, 1, 0, 0);
 
+  ctx.translate(400, 400);
+  ctx.rotate(camera.r.val);
+  ctx.translate(-400, -400);
+  ctx.translate(enemy.position.x, enemy.position.y);
+  ctx.rotate(-camera.r.val);
+  ctx.drawImage(images.enemy, -enemy.size.x / 2, -enemy.size.y);
+  //   ctx.drawImage(
+  //     images.enemy,
+  //     enemy.position.x -
+  //       player.position.x -
+  //       enemy.size.x / 2 +
+  //       player.onScreenPosition.x,
+  //     enemy.position.y -
+  //       player.position.y -
+  //       enemy.size.y +
+  //       player.onScreenPosition.y
+  //   );
+
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.drawImage(
     images.player,
     player.onScreenPosition.x - player.size.x / 2,
