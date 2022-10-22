@@ -83,6 +83,8 @@ const images = loadImages();
 
 const player = new Player();
 const enemy = new Enemy();
+const objectList = [player, enemy];
+// const objectList = [player, enemy].sort();
 
 const gameLoop = (timestamp: number) => {
   const delta = (timestamp - lastTimestamp) / 1000;
@@ -90,17 +92,24 @@ const gameLoop = (timestamp: number) => {
   player.move(delta, keysPressed);
   player.rotate(delta, keysPressed);
 
-  ctx.clearRect(0, 0, gameWindow.width, gameWindow.height);
+  objectList.forEach((obj) => obj.recalcZ(player.r));
+  objectList.sort((a, b) => {
+    return a.z - b.z;
+  });
 
+  ctx.clearRect(0, 0, gameWindow.width, gameWindow.height);
   ctx.translate(player.onScreenPosition.x, player.onScreenPosition.y);
   ctx.rotate(player.r.val);
   ctx.translate(-player.onScreenPosition.x, -player.onScreenPosition.y);
-
   ctx.drawImage(
     images.chessboard,
     0 - player.position.x + player.onScreenPosition.x,
     0 - player.position.y + player.onScreenPosition.y
   );
+
+  objectList.forEach((obj) => {
+    obj;
+  });
 
   drawPlaced(
     ctx,
@@ -109,25 +118,28 @@ const gameLoop = (timestamp: number) => {
     enemy.position.y,
     enemy.size.x / 2,
     enemy.size.y,
-    player
+    player.position,
+    player.onScreenPosition,
+    player.r.val
   );
-
-  ctx.translate(
-    enemy.position.x + player.onScreenPosition.x - player.position.x,
-    enemy.position.y + player.onScreenPosition.y - player.position.y
-  );
-
-  ctx.rotate(-player.r.val);
-  ctx.drawImage(images.enemy, -enemy.size.x / 2, -enemy.size.y);
-
   ctx.setTransform(1, 0, 0, 1, 0, 0);
+  drawPlaced(
+    ctx,
+    images.player,
+    player.position.x,
+    player.position.y,
+    player.size.x / 2,
+    player.size.y,
+    player.position,
+    player.onScreenPosition,
+    0
+  );
   ctx.drawImage(
     images.player,
     player.onScreenPosition.x - player.size.x / 2,
     player.onScreenPosition.y - player.size.y
   );
 
-  ctx.setTransform(1, 0, 0, 1, 0, 0);
   requestAnimationFrame(gameLoop);
 };
 gameLoop(lastTimestamp);

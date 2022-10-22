@@ -1,4 +1,4 @@
-import { KeysPressed } from './models';
+import { KeysPressed, Rotation } from './models';
 
 export class Player {
   public position = {
@@ -13,10 +13,11 @@ export class Player {
     x: 50,
     y: 100
   };
+  public z = 400;
   public speed = 150;
 
   public rotationSpeed = 1;
-  public r = {
+  public r: Rotation = {
     val: 0,
     sin: 0,
     cos: 1
@@ -31,6 +32,7 @@ export class Player {
     y: 50
   };
 
+  public recalcZ = () => {};
   public rotate = (delta: number, keysPressed: KeysPressed) => {
     if (!(keysPressed.q && keysPressed.e)) {
       if (keysPressed.q) {

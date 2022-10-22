@@ -7,6 +7,9 @@ import { Player } from './player';
  * @param y y position where thing has to be placed
  * @param rotationOffsetX distance from left side to position point of image - usually half width
  * @param rotationOffsetY distance from top side to  position point of image - usually full height
+ * @param playerPosition position of player
+ * @param playerOnScreenPosition position of player on screen usually(400,400)
+ * @param playerRotationAngle angle to rotate back = 0 for player? player.r.val for other
  **/
 export const drawPlaced = (
   ctx: CanvasRenderingContext2D,
@@ -15,15 +18,17 @@ export const drawPlaced = (
   y: number,
   rotationOffsetX: number,
   rotationOffsetY: number,
-  player: Player
+  playerPosition: Player['position'],
+  playerOnScreenPosition: Player['onScreenPosition'],
+  playerRotationAngle: number
 ) => {
   const baseTransform = ctx.getTransform();
   ctx.translate(
-    x + player.onScreenPosition.x - player.position.x,
-    y + player.onScreenPosition.y - player.position.y
+    x + playerOnScreenPosition.x - playerPosition.x,
+    y + playerOnScreenPosition.y - playerPosition.y
   );
 
-  ctx.rotate(-player.r.val);
+  ctx.rotate(-playerRotationAngle);
   ctx.drawImage(img, -rotationOffsetX, -rotationOffsetY);
   ctx.setTransform(baseTransform);
 };

@@ -7,3 +7,8 @@ export interface KeysPressed {
   q: boolean;
   e: boolean;
 }
+export interface Rotation {
+  val: number;
+  sin: number;
+  cos: number;
+}
