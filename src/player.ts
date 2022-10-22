@@ -1,5 +1,7 @@
 import { KeysPressed, Rotation } from './models';
-
+import playerImgURL from './images/player.png';
+const playerImg = new Image();
+playerImg.src = playerImgURL;
 export class Player {
   public position = {
     x: 0,
@@ -45,7 +47,7 @@ export class Player {
       this.r.sin = Math.sin(this.r.val);
     }
   };
-
+  public image = playerImg;
   public move = (delta: number, keysPressed: KeysPressed) => {
     if (!(keysPressed.a && keysPressed.d)) {
       if (keysPressed.a) {

@@ -102,7 +102,7 @@ const gameLoop = (timestamp: number) => {
   ctx.rotate(player.r.val);
   ctx.translate(-player.onScreenPosition.x, -player.onScreenPosition.y);
   ctx.drawImage(
-    images.chessboard,
+    images.chessboardImg,
     0 - player.position.x + player.onScreenPosition.x,
     0 - player.position.y + player.onScreenPosition.y
   );
@@ -113,7 +113,7 @@ const gameLoop = (timestamp: number) => {
 
   drawPlaced(
     ctx,
-    images.enemy,
+    enemy.image,
     enemy.position.x,
     enemy.position.y,
     enemy.size.x / 2,
@@ -125,7 +125,7 @@ const gameLoop = (timestamp: number) => {
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   drawPlaced(
     ctx,
-    images.player,
+    player.image,
     player.position.x,
     player.position.y,
     player.size.x / 2,
@@ -135,7 +135,7 @@ const gameLoop = (timestamp: number) => {
     0
   );
   ctx.drawImage(
-    images.player,
+    player.image,
     player.onScreenPosition.x - player.size.x / 2,
     player.onScreenPosition.y - player.size.y
   );

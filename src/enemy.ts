@@ -1,5 +1,7 @@
 import { Rotation } from './models';
-
+import enemyImgURL from './images/enemy.png';
+const enemyImg = new Image();
+enemyImg.src = enemyImgURL;
 export class Enemy {
   public position = {
     x: 200,
@@ -9,6 +11,7 @@ export class Enemy {
     x: 50,
     y: 100
   };
+  public image = enemyImg;
   public z = 0;
   public move = (delta: number) => {};
   public recalcZ = (rotation: Rotation) => {
