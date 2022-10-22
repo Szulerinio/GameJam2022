@@ -2,8 +2,12 @@ import { KeysPressed } from './models';
 
 export class Player {
   public position = {
-    x: 0,
-    y: 0
+    x: 400,
+    y: 400
+  };
+  public onScreenPosition = {
+    x: 400,
+    y: 400
   };
   public size = {
     x: 50,
