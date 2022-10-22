@@ -1,5 +1,6 @@
 body {
   background-color: darkgray;
+  margin: 0;
 }
 
 .game-container {
@@ -9,6 +10,6 @@ body {
   align-items: center;
   justify-content: center;
 }
-canvas {  
-    background-color: white;
+canvas {
+  background-color: white;
 }
