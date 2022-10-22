@@ -108,7 +108,10 @@ const gameLoop = (timestamp: number) => {
   ctx.translate(400, 400);
   ctx.rotate(camera.r.val);
   ctx.translate(-400, -400);
-  ctx.translate(enemy.position.x, enemy.position.y);
+  ctx.translate(
+    enemy.position.x + player.onScreenPosition.x - player.position.x,
+    enemy.position.y + player.onScreenPosition.y - player.position.y
+  );
   ctx.rotate(-camera.r.val);
   ctx.drawImage(images.enemy, -enemy.size.x / 2, -enemy.size.y);
   //   ctx.drawImage(
