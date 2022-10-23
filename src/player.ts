@@ -18,7 +18,7 @@ kiteImg.src = kiteImgURL;
 export class Player implements DrawMethod, CollisionBox, DEBUGDrawMethod {
   public position = {
     x: 2900,
-    y: 1000
+    y: 700
   };
   public onScreenPosition = {
     x: 400,
@@ -65,9 +65,9 @@ export class Player implements DrawMethod, CollisionBox, DEBUGDrawMethod {
   };
   public rotationSpeed = 1;
   public r: Rotation = {
-    val: 0,
+    val: Math.PI,
     sin: 0,
-    cos: 1
+    cos: -1
   };
 
   public collisionBox = {
