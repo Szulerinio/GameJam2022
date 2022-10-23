@@ -86,15 +86,22 @@ let lastTimestamp = 0;
 const images = loadImages();
 
 const player = new Player();
-const enemy = new Enemy();
-const objectList = [player, enemy];
+const enemies = [
+  new Enemy({ x: 20, y: 20 }),
+  new Enemy({ x: 70, y: 70 }),
+  new Enemy({ x: 150, y: 150 }),
+  new Enemy({ x: 120, y: 10 })
+];
+const objectList = [player, ...enemies];
 
 const gameLoop = (timestamp: number) => {
   const delta = (timestamp - lastTimestamp) / 1000;
   lastTimestamp = timestamp;
   player.move(delta, keysPressed, objectList);
   player.rotate(delta, keysPressed);
-
+  enemies.forEach((ene) => {
+    ene.move(delta, player.position, objectList);
+  });
   objectList.forEach((obj) => obj.recalcZ(player.r, player.position));
   objectList.sort((a, b) => {
     return a.z - b.z;
