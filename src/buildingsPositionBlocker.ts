@@ -120,14 +120,14 @@ export const keepOutOfBuildings = (
       newPosition.y < bldng.bottom
     ) {
       const przekatna = (bldng.bottom - bldng.top) / (bldng.right - bldng.left);
-      console.log('przekatna', przekatna);
+      // console.log('przekatna', przekatna);
 
       //lewydol true /prawydol false
       const isPrawaGora =
         (newPosition.x - bldng.left) * przekatna > newPosition.y - bldng.top;
       const isLewaGora =
         bldng.bottom - (newPosition.x - bldng.left) * przekatna > newPosition.y;
-      console.log(isPrawaGora, isLewaGora);
+      // console.log(isPrawaGora, isLewaGora);
 
       if (isPrawaGora && isLewaGora) newPosition.y = bldng.top;
       if (isPrawaGora && !isLewaGora) newPosition.x = bldng.right;

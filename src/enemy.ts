@@ -73,7 +73,7 @@ export class Enemy implements DrawMethod, CollisionBox, DEBUGDrawMethod {
         const sumR = this.collisionBox.r + curr.collisionBox.r;
         const sumR2 = sumR ** 2;
 
-        console.log(sumR2, distX2);
+        // console.log(sumR2, distX2);
         prev[0] += (distX - sumR * signX) * Math.sin(distX2 / sumR2);
         prev[1] += (distY - sumR * signY) * Math.sin(distY2 / sumR2);
 
@@ -82,7 +82,7 @@ export class Enemy implements DrawMethod, CollisionBox, DEBUGDrawMethod {
       [0, 0]
     );
     if (vector[0] != 0 || vector[1] != 0) {
-      console.log(vector);
+      // console.log(vector);
     }
     this.position.x -= vector[0];
     this.position.y -= vector[1];

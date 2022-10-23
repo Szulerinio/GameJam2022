@@ -6,12 +6,15 @@ import {
   Rotation
 } from './models';
 import playerImgURL from './images/player.png';
+import kiteImgURL from './images/kite.png';
 import { DEBUGdrawPlaced, drawPlaced } from './drawPlaced';
 import { getIsColliding } from './helpers';
 import { Enemy } from './enemy';
 import { keepOutOfBuildings, returnToWorld } from './buildingsPositionBlocker';
 const playerImg = new Image();
 playerImg.src = playerImgURL;
+const kiteImg = new Image();
+kiteImg.src = kiteImgURL;
 export class Player implements DrawMethod, CollisionBox, DEBUGDrawMethod {
   public position = {
     x: 2900,
@@ -28,6 +31,38 @@ export class Player implements DrawMethod, CollisionBox, DEBUGDrawMethod {
   public z = 0;
   public speed = 150;
 
+  public kite = {
+    img: kiteImg,
+    speed: 2,
+    max: 300,
+    min: 40,
+
+    size: { x: 30, y: 30 },
+    collisionBox: {
+      x: 0,
+      y: -15,
+      r: 15
+    },
+    current: 40,
+    draw: (ctx: CanvasRenderingContext2D) => {
+      ctx.drawImage(
+        this.kite.img,
+        this.onScreenPosition.x - this.kite.size.x / 2,
+        this.onScreenPosition.y - this.kite.current - this.kite.size.y,
+        this.kite.size.x,
+        this.kite.size.y
+      );
+      ctx.beginPath();
+      ctx.moveTo(this.onScreenPosition.x - 18, this.onScreenPosition.y - 70);
+      ctx.lineTo(
+        this.onScreenPosition.x - this.kite.size.x / 2,
+        this.onScreenPosition.y - this.kite.current
+      );
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = 'red';
+      ctx.stroke();
+    }
+  };
   public rotationSpeed = 1;
   public r: Rotation = {
     val: 0,
@@ -116,7 +151,16 @@ export class Player implements DrawMethod, CollisionBox, DEBUGDrawMethod {
         this.position.x += delta * this.speed * this.r.sin;
       }
     }
-
+    if (!(keysPressed.n && keysPressed.m)) {
+      if (keysPressed.n) {
+        if (this.kite.current > this.kite.min)
+          this.kite.current -= this.kite.speed;
+      }
+      if (keysPressed.m) {
+        if (this.kite.current < this.kite.max)
+          this.kite.current += this.kite.speed;
+      }
+    }
     const filtered = objectList.filter((obj) => {
       if (this === obj) {
         return false;
@@ -145,7 +189,7 @@ export class Player implements DrawMethod, CollisionBox, DEBUGDrawMethod {
         const sumR = this.collisionBox.r + curr.collisionBox.r;
         const sumR2 = sumR ** 2;
 
-        console.log(sumR2, distX2);
+        // console.log(sumR2, distX2);
         prev[0] += (distX - sumR * signX) * Math.sin(distX2 / sumR2);
         prev[1] += (distY - sumR * signY) * Math.sin(distY2 / sumR2);
 
@@ -154,7 +198,7 @@ export class Player implements DrawMethod, CollisionBox, DEBUGDrawMethod {
       [0, 0]
     );
     if (vector[0] != 0 || vector[1] != 0) {
-      console.log(vector);
+      // console.log(vector);
     }
     this.position.x -= vector[0];
     this.position.y -= vector[1];

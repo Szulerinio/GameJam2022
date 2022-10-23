@@ -11,7 +11,9 @@ const keysPressed: KeysPressed = {
   d: false,
   w: false,
   q: false,
-  e: false
+  e: false,
+  n: false,
+  m: false
 };
 
 const DEBUGTool = {
@@ -44,6 +46,13 @@ const onKeyDown = (e: KeyboardEvent) => {
     case 'e':
       keysPressed.e = true;
       break;
+
+    case 'n':
+      keysPressed.n = true;
+      break;
+    case 'm':
+      keysPressed.m = true;
+      break;
     default:
       break;
   }
@@ -69,6 +78,12 @@ const onKeyUp = (e: KeyboardEvent) => {
     case 'e':
       keysPressed.e = false;
       break;
+    case 'n':
+      keysPressed.n = false;
+      break;
+    case 'm':
+      keysPressed.m = false;
+      break;
     default:
       break;
   }
@@ -87,6 +102,7 @@ const images = loadImages();
 
 const player = new Player();
 const enemies = [
+  new Enemy({ x: 2801, y: 1101 }),
   new Enemy({ x: 212, y: 1300 }),
   new Enemy({ x: 250, y: 2016 }),
   new Enemy({ x: 250, y: 2016 }),
@@ -108,7 +124,7 @@ const enemies = [
   new Enemy({ x: 150, y: 150 }),
   new Enemy({ x: 120, y: 10 })
 ];
-const objectList = [player, ...enemies];
+let objectList = [player, ...enemies];
 
 const gameLoop = (timestamp: number) => {
   const delta = (timestamp - lastTimestamp) / 1000;
@@ -117,6 +133,25 @@ const gameLoop = (timestamp: number) => {
   player.rotate(delta, keysPressed);
   enemies.forEach((ene) => {
     ene.move(delta, player.position, objectList);
+  });
+  objectList = objectList.filter((enemy) => {
+    if (enemy === player) return true;
+    const enemyX = enemy.position.x + enemy.collisionBox.x;
+    const enemyY = enemy.position.y + enemy.collisionBox.y;
+    const KiteX =
+      player.position.x +
+      player.kite.collisionBox.x -
+      player.kite.current * player.r.sin;
+    const KiteY =
+      player.position.y +
+      player.kite.collisionBox.y -
+      player.kite.current * player.r.cos;
+    const x2 = (enemyX - KiteX) ** 2;
+    const y2 = (enemyY - KiteY) ** 2;
+    const r2 = (enemy.collisionBox.r + player.kite.collisionBox.r) ** 2;
+    console.log(x2, y2, r2);
+
+    return x2 + y2 > r2;
   });
   objectList.forEach((obj) => obj.recalcZ(player.r, player.position));
   objectList.sort((a, b) => {
@@ -145,6 +180,7 @@ const gameLoop = (timestamp: number) => {
       );
   });
   ctx.setTransform(1, 0, 0, 1, 0, 0);
+  player.kite.draw(ctx);
   requestAnimationFrame(gameLoop);
 };
 gameLoop(lastTimestamp);

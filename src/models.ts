@@ -8,6 +8,9 @@ export interface KeysPressed {
 
   q: boolean;
   e: boolean;
+
+  n: boolean;
+  m: boolean;
 }
 export interface Rotation {
   val: number;
