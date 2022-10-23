@@ -7,6 +7,8 @@ import {
 } from './models';
 import playerImgURL from './images/player.png';
 import { DEBUGdrawPlaced, drawPlaced } from './drawPlaced';
+import { getIsColliding } from './helpers';
+import { Enemy } from './enemy';
 const playerImg = new Image();
 playerImg.src = playerImgURL;
 export class Player implements DrawMethod, CollisionBox, DEBUGDrawMethod {
@@ -90,7 +92,11 @@ export class Player implements DrawMethod, CollisionBox, DEBUGDrawMethod {
     }
   };
   public image = playerImg;
-  public move = (delta: number, keysPressed: KeysPressed) => {
+  public move = (
+    delta: number,
+    keysPressed: KeysPressed,
+    objectList: (Player | Enemy)[]
+  ) => {
     if (!(keysPressed.a && keysPressed.d)) {
       if (keysPressed.a) {
         this.position.x -= delta * this.speed * this.r.cos;
@@ -111,5 +117,48 @@ export class Player implements DrawMethod, CollisionBox, DEBUGDrawMethod {
         this.position.x += delta * this.speed * this.r.sin;
       }
     }
+
+    const filtered = objectList.filter((obj) => {
+      if (this === obj) {
+        return false;
+      }
+      return getIsColliding(
+        this.position,
+        this.collisionBox,
+        obj.position,
+        obj.collisionBox
+      );
+    });
+    const vector = filtered.reduce(
+      (prev, curr) => {
+        const distX = this.position.x - curr.position.x;
+        const signX = distX < 0 ? -1 : 1;
+        const distX2 = distX ** 2;
+        const distY = this.position.y - curr.position.y;
+        const signY = distY < 0 ? -1 : 1;
+        const distY2 = distY ** 2;
+        const sumR = this.collisionBox.r + curr.collisionBox.r;
+        const sumR2 = sumR ** 2;
+
+        console.log(sumR2, distX2);
+        prev[0] += (distX - sumR * signX) * Math.sin(distX2 / sumR2);
+        prev[1] += (distY - sumR * signY) * Math.sin(distY2 / sumR2);
+
+        // prev[1] -= - sumR
+        //   (isYbelowZero ? -1 : 1) * Math.cos((Math.PI / 2) * (distX2 / sumR2));
+        // prev[0] -=
+        //   ((isXbelowZero ? distX : distX) * (1 - distX2 / sumR2) * distX2) /
+        //   sumR2;
+        // prev[1] -=
+        //   (this.collisionBox.r + curr.collisionBox.r) / (distY / distX);
+        return prev;
+      },
+      [0, 0]
+    );
+    if (vector[0] != 0 || vector[1] != 0) {
+      console.log(vector);
+    }
+    this.position.x -= vector[0];
+    this.position.y -= vector[1];
   };
 }

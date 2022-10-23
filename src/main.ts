@@ -15,8 +15,8 @@ const keysPressed: KeysPressed = {
 };
 
 const DEBUGTool = {
-  collisionBox: true,
-  sprite: false
+  collisionBox: false,
+  sprite: true
 };
 
 const gameWindow = {
@@ -92,7 +92,7 @@ const objectList = [player, enemy];
 const gameLoop = (timestamp: number) => {
   const delta = (timestamp - lastTimestamp) / 1000;
   lastTimestamp = timestamp;
-  player.move(delta, keysPressed);
+  player.move(delta, keysPressed, objectList);
   player.rotate(delta, keysPressed);
 
   objectList.forEach((obj) => obj.recalcZ(player.r, player.position));
