@@ -87,8 +87,24 @@ const images = loadImages();
 
 const player = new Player();
 const enemies = [
-  new Enemy({ x: 20, y: 20 }),
-  new Enemy({ x: 70, y: 70 }),
+  new Enemy({ x: 212, y: 1300 }),
+  new Enemy({ x: 250, y: 2016 }),
+  new Enemy({ x: 250, y: 2016 }),
+  new Enemy({ x: 280, y: 2016 }),
+  new Enemy({ x: 320, y: 2016 }),
+  new Enemy({ x: 350, y: 2016 }),
+  new Enemy({ x: 390, y: 2016 }),
+  new Enemy({ x: 440, y: 2016 }),
+  new Enemy({ x: 280, y: 2220 }),
+  new Enemy({ x: 320, y: 2220 }),
+  new Enemy({ x: 350, y: 2220 }),
+  new Enemy({ x: 390, y: 2220 }),
+  new Enemy({ x: 440, y: 2220 }),
+  new Enemy({ x: 280, y: 2400 }),
+  new Enemy({ x: 320, y: 2400 }),
+  new Enemy({ x: 350, y: 2400 }),
+  new Enemy({ x: 390, y: 2400 }),
+  new Enemy({ x: 440, y: 2400 }),
   new Enemy({ x: 150, y: 150 }),
   new Enemy({ x: 120, y: 10 })
 ];
