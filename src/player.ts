@@ -35,8 +35,8 @@ export class Player implements DrawMethod, CollisionBox, DEBUGDrawMethod {
   };
 
   public collisionBox = {
-    x: this.size.x / 2,
-    y: 70,
+    x: 0,
+    y: -20,
     r: 25
   };
 
@@ -131,10 +131,16 @@ export class Player implements DrawMethod, CollisionBox, DEBUGDrawMethod {
     });
     const vector = filtered.reduce(
       (prev, curr) => {
-        const distX = this.position.x - curr.position.x;
+        const distX =
+          this.position.x +
+          this.collisionBox.x -
+          (curr.position.x + curr.collisionBox.x);
         const signX = distX < 0 ? -1 : 1;
         const distX2 = distX ** 2;
-        const distY = this.position.y - curr.position.y;
+        const distY =
+          this.position.y +
+          this.collisionBox.y -
+          (curr.position.y + curr.collisionBox.y);
         const signY = distY < 0 ? -1 : 1;
         const distY2 = distY ** 2;
         const sumR = this.collisionBox.r + curr.collisionBox.r;
@@ -144,13 +150,6 @@ export class Player implements DrawMethod, CollisionBox, DEBUGDrawMethod {
         prev[0] += (distX - sumR * signX) * Math.sin(distX2 / sumR2);
         prev[1] += (distY - sumR * signY) * Math.sin(distY2 / sumR2);
 
-        // prev[1] -= - sumR
-        //   (isYbelowZero ? -1 : 1) * Math.cos((Math.PI / 2) * (distX2 / sumR2));
-        // prev[0] -=
-        //   ((isXbelowZero ? distX : distX) * (1 - distX2 / sumR2) * distX2) /
-        //   sumR2;
-        // prev[1] -=
-        //   (this.collisionBox.r + curr.collisionBox.r) / (distY / distX);
         return prev;
       },
       [0, 0]

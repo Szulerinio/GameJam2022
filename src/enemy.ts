@@ -17,8 +17,8 @@ export class Enemy implements DrawMethod, CollisionBox, DEBUGDrawMethod {
   public z = 0;
   public move = (delta: number) => {};
   public collisionBox = {
-    x: this.size.x / 2,
-    y: 70,
+    x: 0,
+    y: -20,
     r: 25
   };
   public recalcZ = (rotation: Rotation, playerPosition: Player['position']) => {

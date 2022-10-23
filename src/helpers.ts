@@ -8,9 +8,9 @@ export const getIsColliding = (
   bCollisionBox: CollisionBox['collisionBox']
 ) => {
   const x2 =
-    (aPosition.x - aCollisionBox.x - (bPosition.x - bCollisionBox.x)) ** 2;
+    (aPosition.x + aCollisionBox.x - (bPosition.x + bCollisionBox.x)) ** 2;
   const y2 =
-    (aPosition.y - aCollisionBox.y - (bPosition.y - bCollisionBox.y)) ** 2;
+    (aPosition.y + aCollisionBox.y - (bPosition.y + bCollisionBox.y)) ** 2;
   const r2 = (aCollisionBox.r + bCollisionBox.r) ** 2;
 
   return r2 >= x2 + y2;

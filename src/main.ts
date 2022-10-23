@@ -15,7 +15,7 @@ const keysPressed: KeysPressed = {
 };
 
 const DEBUGTool = {
-  collisionBox: false,
+  collisionBox: true,
   sprite: true
 };
 
