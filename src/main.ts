@@ -149,7 +149,7 @@ const gameLoop = (timestamp: number) => {
     const x2 = (enemyX - KiteX) ** 2;
     const y2 = (enemyY - KiteY) ** 2;
     const r2 = (enemy.collisionBox.r + player.kite.collisionBox.r) ** 2;
-    console.log(x2, y2, r2);
+    // console.log(x2, y2, r2);
 
     return x2 + y2 > r2;
   });

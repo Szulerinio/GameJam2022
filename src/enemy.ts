@@ -3,11 +3,7 @@ import enemyImgURL from './images/enemy.png';
 import { DEBUGdrawPlaced, drawPlaced } from './drawPlaced';
 import { Player } from './player';
 import { getIsColliding } from './helpers';
-import {
-  keepOutOfBuildings,
-  returnToWorld,
-  world
-} from './buildingsPositionBlocker';
+import { keepOutOfBuildings, returnToWorld } from './buildingsPositionBlocker';
 const enemyImg = new Image();
 enemyImg.src = enemyImgURL;
 export class Enemy implements DrawMethod, CollisionBox, DEBUGDrawMethod {
