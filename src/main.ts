@@ -121,9 +121,12 @@ const enemies = [
   new Enemy({ x: 350, y: 2400 }),
   new Enemy({ x: 390, y: 2400 }),
   new Enemy({ x: 440, y: 2400 }),
-  new Enemy({ x: 150, y: 150 }),
-  new Enemy({ x: 120, y: 10 })
+  new Enemy({ x: 150 + 1100, y: 150 }),
+  new Enemy({ x: 120 + 1100, y: 10 })
 ];
+for (let i = 0; i < 200; i++) {
+  enemies.push(new Enemy({ x: Math.random() * 5000, y: Math.random() * 5000 }));
+}
 let objectList = [player, ...enemies];
 
 const gameLoop = (timestamp: number) => {
