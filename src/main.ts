@@ -112,7 +112,7 @@ const gameLoop = (timestamp: number) => {
   ctx.rotate(player.r.val);
   ctx.translate(-player.onScreenPosition.x, -player.onScreenPosition.y);
   ctx.drawImage(
-    images.chessboardImg,
+    images.mapImg,
     0 - player.position.x + player.onScreenPosition.x,
     0 - player.position.y + player.onScreenPosition.y
   );
