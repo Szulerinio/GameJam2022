@@ -10,15 +10,15 @@ export class Enemy implements DrawMethod, CollisionBox, DEBUGDrawMethod {
     y: 200
   };
   public size = {
-    x: 50,
-    y: 100
+    x: 40,
+    y: 49
   };
   public image = enemyImg;
   public z = 0;
   public move = (delta: number) => {};
   public collisionBox = {
     x: 0,
-    y: -20,
+    y: -25,
     r: 25
   };
   public recalcZ = (rotation: Rotation, playerPosition: Player['position']) => {
@@ -56,8 +56,6 @@ export class Enemy implements DrawMethod, CollisionBox, DEBUGDrawMethod {
       ctx,
       this.position.x,
       this.position.y,
-      this.size.x / 2,
-      this.size.y,
       this.collisionBox,
       playerPosition,
       playerOnScreenPosition,

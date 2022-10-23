@@ -36,7 +36,7 @@ export class Player implements DrawMethod, CollisionBox, DEBUGDrawMethod {
 
   public collisionBox = {
     x: 0,
-    y: -20,
+    y: -25,
     r: 25
   };
 
@@ -70,8 +70,6 @@ export class Player implements DrawMethod, CollisionBox, DEBUGDrawMethod {
       ctx,
       this.position.x,
       this.position.y,
-      this.size.x / 2,
-      this.size.y,
       this.collisionBox,
       playerPosition,
       playerOnScreenPosition,
