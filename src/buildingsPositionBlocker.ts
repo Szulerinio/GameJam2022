@@ -59,8 +59,8 @@ const building6_1: building = {
 };
 
 const building7: building = {
-  top: 1500,
-  left: 1380,
+  top: 1380,
+  left: 1500,
   right: 1710,
   bottom: 1573
 };
