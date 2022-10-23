@@ -9,12 +9,13 @@ import playerImgURL from './images/player.png';
 import { DEBUGdrawPlaced, drawPlaced } from './drawPlaced';
 import { getIsColliding } from './helpers';
 import { Enemy } from './enemy';
+import { returnToWorld } from './buildingsPositionBlocker';
 const playerImg = new Image();
 playerImg.src = playerImgURL;
 export class Player implements DrawMethod, CollisionBox, DEBUGDrawMethod {
   public position = {
-    x: 0,
-    y: 0
+    x: 2900,
+    y: 1000
   };
   public onScreenPosition = {
     x: 400,
@@ -157,5 +158,6 @@ export class Player implements DrawMethod, CollisionBox, DEBUGDrawMethod {
     }
     this.position.x -= vector[0];
     this.position.y -= vector[1];
+    this.position = returnToWorld(this.position);
   };
 }
